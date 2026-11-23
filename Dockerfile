@@ -2,7 +2,7 @@
 # Noop 服务端镜像：上游无官方 Docker 发布，直接从源码构建。
 # 运行时 = bun daemon（src/cli.ts daemon）：任务编排、agent 调度、本地聊天 API + Web 聊天页（8787）。
 # 构建上下文根目录需包含 checkout 出来的上游源码（upstream/）。
-FROM oven/bun:1.3-debian AS build
+FROM oven/bun:1.4-debian AS build
 
 WORKDIR /noop
 COPY upstream/ ./
