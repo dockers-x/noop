@@ -8,7 +8,10 @@ if [ ! -f /lzcapp/var/noop/data/config.toml ]; then
   echo "first run: initializing Noop data (local mode)"
   mkdir -p /lzcapp/var/noop
   cd /noop
+  # HUB_HOST 固定为 lazycat：primary 名字必须与 daemon 运行时一致（否则 daemon 认为自己不是 primary，
+  # 聊天 API 不会启动）；init 与 daemon 共用同一个 HUB_HOST 环境变量。
   HUB_NO_MEDIC=1 HUB_SYNC_FAKE=local NOOP_HOME=/lzcapp/var/noop HUB_DATA=/lzcapp/var/noop/data \
+    HUB_HOST="${HUB_HOST:-lazycat}" \
     bun src/cli.ts init --primary < /dev/null
   echo
   echo "=============================================="
