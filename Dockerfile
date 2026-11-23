@@ -24,11 +24,12 @@ COPY --from=build /usr/local/bin/bun /usr/local/bin/bun
 
 WORKDIR /noop
 COPY --from=build /noop /noop
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 ENV PATH="/noop/bin:${PATH}" \
     NOOP_HOME=/lzcapp/var/noop \
     HUB_DATA=/lzcapp/var/noop/data \
     NOOP_CLIENT_BASE_URL=https://github.com/huacnlee/noop/releases/latest/download
 
 EXPOSE 8787
-ENTRYPOINT ["/usr/bin/tini", "--"]
+ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/entrypoint.sh"]
 CMD ["bun", "/noop/src/cli.ts", "daemon"]
